@@ -28,10 +28,9 @@ Route::group(
     function ($router) {
         Route::get('',[TaskController::class,'index']);
         Route::post('create_task',[TaskController::class,'createTask'] );
-        Route::put('update/{task}',[TaskController::class,'update'] );
-        Route::delete('delete/{task}',[TaskController::class,'destroy']);
+        Route::post('delete_task',[TaskController::class,'deleteTask']);
         Route::post('delete_prerequisites',[TaskController::class,'deletePrerequisitesFromTask']);
         Route::post('add_prerequisites',[TaskController::class,'addPrerequisitesToTask']);
-        Route::get('get/{task}',[TaskController::class,'show'] );
+        
     }
 );

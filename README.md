@@ -5,13 +5,21 @@ This is a demo api for job application. All the usage details are provided in th
 # Requirements
 - PHP >= 8.0
 - Laravel >= 8.*
-- react 
+- nodejs >=12.4.*
+- react >=6.*
 
 # Installation
+- React dependencies
+    npm install 
+  - react-bootstrap bootstrap@5.1.3
+  - react-bootstrap-icons
+  - react-data-table-component
+  - styled-components
 
-- composer require tymon/jwt-auth : [https://jwt-auth.readthedocs.io/en/develop/laravel-installation](https://jwt-auth.readthedocs.io/en/develop/laravel-installation/) 
-- composer require pnlinh/laravel-google-distance : [https://github.com/pnlinh/laravel-google-distance/blob/master/README.md](https://github.com/pnlinh/laravel-google-distance/blob/master/README.md)
 
 
 # Postman
-Postman workspace :[https://www.postman.com/nejatsaygin/workspace/nejatsaygin-iceberg-case/overview](https://www.postman.com/nejatsaygin/workspace/nejatsaygin-iceberg-case/overview)  
+Postman workspace :[https://www.postman.com/lunar-robot-245052/workspace/my-workspace/request/10651254-333ab8ca-0d39-4dc9-bb0d-80c5e7f4bbef](https://www.postman.com/lunar-robot-245052/workspace/my-workspace/request/10651254-333ab8ca-0d39-4dc9-bb0d-80c5e7f4bbef)  
+
+# demo
+[http://feight-forwarding.herokuapp.com/](http://feight-forwarding.herokuapp.com/)  

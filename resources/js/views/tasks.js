@@ -142,6 +142,40 @@ const Tasks = (props)=> {
         setAddTaskModalShow(false);
     };
 
+    const handleDeleteTask = (row)=>{
+        axios.post(
+            `/api/tasks/delete_task`,{
+                task : row.id
+            }
+        ).then((res)=>{
+            setToastShow(true);
+            setToastMessage("Processed successfully!");
+            setToastBg("success");
+            setToastHeader("Success");
+            setSelectedTask([]);
+            getTasks();
+        }).catch((error)=>{
+            setToastShow(true);
+            if (error.response) {
+                var message=" ";
+                Object.keys(error.response.data.errors).forEach(key => {
+                    message+=error.response.data.errors[key]+"\n";
+                });
+             
+            } else if (error.request) {
+            
+                console.log(error.request);
+            } else {
+            
+                console.log('Error', error.message);
+            }
+            
+            setToastMessage(message);
+            setToastBg("danger");
+            setToastHeader("Error");
+        });
+    }
+
     const deletePrerequisite = (row)=>{
         axios.post(
             `/api/tasks/delete_prerequisites`,{
@@ -486,17 +520,15 @@ const Tasks = (props)=> {
                             <Icon.PlusCircle />
                         </button>
                     },
-                    {
-                        name:"Done",
-                        cell:(row)=><button className={"btn btn-success"} ><Icon.CheckCircle /></button>
-                    },
-                    {
-                        name:"Edit",
-                        cell:(row)=><button className={"btn btn-primary"} ><Icon.PencilSquare /></button>
-                    },
+                  
                     {
                         name:"Delete",
-                        cell:(row)=><button className={"btn btn-danger"} ><Icon.TrashFill /></button>
+                        cell:(row)=><button 
+                            onClick={()=>{handleDeleteTask(row)}} 
+                            className={"btn btn-danger"}
+                        >
+                            <Icon.TrashFill />
+                        </button>
                     }
                 ]}
                 data={tasks}
