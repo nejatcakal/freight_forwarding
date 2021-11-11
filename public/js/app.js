@@ -4268,7 +4268,7 @@ var Tasks = function Tasks(props) {
       setToastMessage("Processed successfully!");
       setToastBg("success");
       setToastHeader("Success");
-    })["catch"](function (e) {
+    })["catch"](function (error) {
       setToastShow(true);
 
       if (error.response) {
@@ -4372,7 +4372,7 @@ var Tasks = function Tasks(props) {
       setToastBg("success");
       setToastHeader("Success");
       setSelectedTask(res.data);
-    })["catch"](function (e) {
+    })["catch"](function (error) {
       setToastShow(true);
 
       if (error.response) {
@@ -4403,7 +4403,7 @@ var Tasks = function Tasks(props) {
       setToastHeader("Success");
       setSelectedTask(res.data);
       setAddPrerequisitesModalShow(false);
-    })["catch"](function (e) {
+    })["catch"](function (error) {
       setToastShow(true);
 
       if (error.response) {

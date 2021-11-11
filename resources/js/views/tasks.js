@@ -39,7 +39,7 @@ const Tasks = (props)=> {
             setToastMessage("Processed successfully!");
             setToastBg("success");
             setToastHeader("Success");
-        }).catch((e)=>{
+        }).catch((error)=>{
             setToastShow(true);
             if (error.response) {
                 var message=" ";
@@ -154,7 +154,7 @@ const Tasks = (props)=> {
             setToastBg("success");
             setToastHeader("Success");
             setSelectedTask(res.data);
-        }).catch((e)=>{
+        }).catch((error)=>{
             setToastShow(true);
             if (error.response) {
                 var message=" ";
@@ -190,7 +190,7 @@ const Tasks = (props)=> {
             setSelectedTask(res.data);
             setAddPrerequisitesModalShow(false);
             
-        }).catch((e)=>{
+        }).catch((error)=>{
             setToastShow(true);
             if (error.response) {
                 var message=" ";
