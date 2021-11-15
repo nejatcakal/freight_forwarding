@@ -40,15 +40,6 @@ class TaskController extends Controller
         return response()->json($this->json_data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -124,8 +115,12 @@ class TaskController extends Controller
     public function createId()
     {
         // create new id
-        $end_of_data = end($this->json_data["tasks"]);
-        $new_id="task_".explode("_",$end_of_data["id"])[1]+1;
+        if(!empty($this->json_data["tasks"])){
+            $end_of_data = end($this->json_data["tasks"]);
+            $new_id="task_".explode("_",$end_of_data["id"])[1]+1;
+        }else{
+            $new_id=0;
+        }
         return $new_id;
     }
 
@@ -147,14 +142,14 @@ class TaskController extends Controller
             $prerequisites_ids = array_merge($prerequisites_ids,$item["prerequisites"]);
             $tasks_ids[] = $item["id"];
         }
-        // check existing task_id
+        // check existing task_id and not in prerequisites
         $validatorTask = Validator::make(
             $request->all(),
             [
-                'task'=> 'required|string|in:'.implode(",",$tasks_ids),
+                'task'=> 'required|string|in:'.implode(",",$tasks_ids).'|not-in:'.implode(",",$prerequisites_ids),
             ]
         );
-        
+       
         if($validatorTask->fails()){
             return response()->json(
                 [
@@ -167,6 +162,7 @@ class TaskController extends Controller
 
         
         // check existing task_id in prerequisites
+        /*
         if(in_array($request->task,$prerequisites_ids)){
             return response()->json(
                 [
@@ -176,7 +172,7 @@ class TaskController extends Controller
                 400
             );
         }
-
+        */
         // remove from json_data the task
         foreach($this->json_data["tasks"] as $key=>$item){
             if($item["id"]==$request->task ){
@@ -246,23 +242,7 @@ class TaskController extends Controller
             return $item["id"];
         },$this->json_data["tasks"]);
 
-        // check existing task_id
-        $validatorTask = Validator::make(
-            $request->all(),
-            [
-                'task'=> 'required|string|in:'.implode(",",$tasks_ids),
-            ]
-        );
 
-        if($validatorTask->fails()){
-            return response()->json(
-                [
-                    'status' => false,
-                    'errors' => $validatorTask->errors()
-                ],
-                400
-            );
-        }
         //take unusiable tasks
         $unAvailablePrerequisites = [];
         $unAvailablePrerequisites[]= $request->task;
@@ -282,7 +262,28 @@ class TaskController extends Controller
             }
         }
 
+        // check existing task_id and check the task npt in unuseable tasks
+        $validatorTask = Validator::make(
+            $request->all(),
+            [
+                'task'=> 'required|string|in:'.implode(",",$tasks_ids),
+                'prerequisite' =>'required|string|not-in:'.implode(",",$unAvailablePrerequisites),
+            ]
+        );
+
+        if($validatorTask->fails()){
+            return response()->json(
+                [
+                    'status' => false,
+                    'errors' => $validatorTask->errors()
+                ],
+                400
+            );
+        }
+        
+
         // check the task in  unusiable tasks
+        /*
         $validatorPrerequisites = Validator::make(
             $request->all(),
             [
@@ -300,7 +301,7 @@ class TaskController extends Controller
                 400
             );
         }
-
+        */
 
         // build new json_data 
         $newjsonData =  array_map(function($item)use($request){

@@ -22,10 +22,13 @@
                 "currency": "u00a3",
                 "quantity": 1200
             },
-            "prerequisites": []
+            "prerequisites": [
+                "task_1",
+                "task_0"
+            ]
         },
         {
-            "title": "nejat",
+            "title": "task 4",
             "type": "invoice_ops",
             "amount": {
                 "currency": "$",
